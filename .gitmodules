@@ -1,21 +1,21 @@
 [submodule "YouCompleteMe"]
 	path = YouCompleteMe
-	url = ./YouCompleteMe/
+	url = https://github.com/Valloric/YouCompleteMe.git 
 [submodule "nerdtree-git-plugin"]
 	path = nerdtree-git-plugin
-	url = ./nerdtree-git-plugin/
+	url = https://github.com/Xuyuanp/nerdtree-git-plugin.git 
 [submodule "tagbar"]
 	path = tagbar
-	url = ./tagbar
+	url = https://github.com/majutsushi/tagbar.git
 [submodule "tagbar-markdown"]
 	path = tagbar-markdown
-	url = ./tagbar-markdown/
+	url = https://github.com/lvht/tagbar-markdown.git
 [submodule "vim-devicons"]
 	path = vim-devicons
-	url = ./vim-devicons/
+	url = https://github.com/ryanoasis/vim-devicons.git
 [submodule "vim-lexical"]
 	path = vim-lexical
-	url = ./vim-lexical/
+	url = https://github.com/reedes/vim-lexical.git
 [submodule "vim-pencil"]
 	path = vim-pencil
-	url = ./vim-pencil/
+	url = https://github.com/reedes/vim-pencil.git
