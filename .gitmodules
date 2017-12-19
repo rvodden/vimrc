@@ -1,0 +1,21 @@
+[submodule "YouCompleteMe"]
+	path = YouCompleteMe
+	url = ./YouCompleteMe/
+[submodule "nerdtree-git-plugin"]
+	path = nerdtree-git-plugin
+	url = ./nerdtree-git-plugin/
+[submodule "tagbar"]
+	path = tagbar
+	url = ./tagbar
+[submodule "tagbar-markdown"]
+	path = tagbar-markdown
+	url = ./tagbar-markdown/
+[submodule "vim-devicons"]
+	path = vim-devicons
+	url = ./vim-devicons/
+[submodule "vim-lexical"]
+	path = vim-lexical
+	url = ./vim-lexical/
+[submodule "vim-pencil"]
+	path = vim-pencil
+	url = ./vim-pencil/
