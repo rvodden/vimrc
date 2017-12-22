@@ -34,16 +34,23 @@ augroup END
 " enable mouse support
 set mouse=a
 
+" map F10 to show syntax highlight group (helpful for debugging)
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
 " ************************* PLUGIN CONFIGS *******************************
 " get NERDTree to startup automatically and on the left
 let g:NERDTreeWinPos = "left"
 autocmd vimenter * NERDTree
+autocmd vimenter * wincmd p
 
 " get vim to close if NERDTree is the only remaining window
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " enable NERDTree mouse support
 let g:NERDTreeMouseMode=2
+let g:NERDTreeShowHidden=1
 
 " give lightline the correct colour scheme
 if !has('gui_running')
@@ -109,3 +116,7 @@ augroup lexical
   autocmd FileType text call lexical#init({ 'spell': 0 })
 augroup END
 
+" configure localvimrc
+
+let g:localvimrc_sandbox = 0
+let g:localvimrc_ask = 0

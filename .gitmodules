@@ -19,3 +19,9 @@
 [submodule "vim-pencil"]
 	path = vim-pencil
 	url = https://github.com/reedes/vim-pencil.git
+[submodule "vim-localvimrc"]
+	path = vim-localvimrc
+	url = https://github.com/embear/vim-localvimrc.git
+[submodule "vim-liquid"]
+	path = vim-liquid
+	url = git@github.com:andyk/vim-liquid.git
