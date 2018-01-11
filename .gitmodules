@@ -31,3 +31,6 @@
 [submodule "vimtex"]
 	path = vimtex
 	url = https://github.com/lervag/vimtex.git
+[submodule "vim-go"]
+	path = vim-go
+	url = ./vim-go/
