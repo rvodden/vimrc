@@ -49,11 +49,6 @@ if !exists("g:os")
     endif
 endif
 
-if g:os == "Darwin"
-    set pythonthreedll=/usr/local/Cellar/python3/3.6.4_2/Frameworks/Python.framework/Versions/3.6/lib/libpython3.6.dylib
-    let g:ycm_server_python_interpreter="python3"
-endif
-
 " ************************* PLUGIN CONFIGS *******************************
 " get NERDTree to startup automatically and on the left
 let g:NERDTreeWinPos = "left"
@@ -64,6 +59,13 @@ augroup NERTree
     " get vim to close if NERDTree is the only remaining window
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 augroup END
+
+if (g:os == "Darwin")
+    let g:ycm_server_python_interpreter="/usr/local/bin/python3"
+    let $PYTHONHOME="/usr/local/Cellar/python3/3.6.4_2/Frameworks/Python.framework/Versions/3.6"
+    set pythonthreedll=/usr/local/Cellar/python3/3.6.4_2/Frameworks/Python.framework/Versions/3.6/lib/libpython3.6.dylib
+    set pythondll=/usr/local/Cellar/python/2.7.14_2/Frameworks/Python.framework/Versions/2.7/lib/python2.7/config/libpython2.7.dylib
+end
 
 " enable NERDTree mouse support
 let g:NERDTreeMouseMode=2
