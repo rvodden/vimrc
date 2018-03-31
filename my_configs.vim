@@ -31,6 +31,18 @@ augroup project
     autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
 augroup END
 
+" configure jenkinsfile to use groovy highlighing
+augroup Jenkins
+    autocmd!
+    au BufNewFile,BufRead Jenkinsfile setf groovy
+augroup END
+
+" indent xml using xmllint
+augroup XML
+    autocmd!
+    autocmd FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
+augroup END
+
 " enable mouse support
 set mouse=a
 
@@ -65,6 +77,12 @@ if (g:os == "Darwin")
     let $PYTHONHOME="/usr/local/Cellar/python3/3.6.4_2/Frameworks/Python.framework/Versions/3.6"
     set pythonthreedll=/usr/local/Cellar/python3/3.6.4_2/Frameworks/Python.framework/Versions/3.6/lib/libpython3.6.dylib
     set pythondll=/usr/local/Cellar/python/2.7.14_2/Frameworks/Python.framework/Versions/2.7/lib/python2.7/config/libpython2.7.dylib
+
+" Use the pbcopy and pbpaste command line utilities to work around the lack of clipboard support
+    nmap <leader>p :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+    imap <leader>p <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+    nmap <leader>y :.w !pbcopy<CR><CR>
+    vnoremap <silent> <leader>y :<CR>:let @a=@" \| execute "normal! vgvy" \| let res=system("pbcopy", @") \| let @"=@a<CR>
 end
 
 " enable NERDTree mouse support
@@ -114,6 +132,7 @@ endfunction
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
+let g:syntastic_aggregate_errors = 1
 
 " configure vim_behat
 let g:feature_filetype='behat'

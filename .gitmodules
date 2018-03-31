@@ -31,3 +31,9 @@
 [submodule "vimtex"]
 	path = vimtex
 	url = https://github.com/lervag/vimtex.git
+[submodule "vim-bundler"]
+	path = vim-bundler
+	url = ./vim-bundler/
+[submodule "plantuml-syntax"]
+	path = plantuml-syntax
+	url = git@github.com:aklt/plantuml-syntax.git
