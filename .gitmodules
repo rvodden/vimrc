@@ -40,3 +40,6 @@
 [submodule "CCTree"]
 	path = CCTree
 	url = https://github.com/hari-rangarajan/CCTree.git
+[submodule "vim-rake"]
+	path = vim-rake
+	url = https://github.com/tpope/vim-rake.git
