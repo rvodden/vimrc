@@ -10,6 +10,8 @@ Then clone this repository into the my_plugins directory with the command (from 
 ```
 rm .gitkeep
 git clone git@github.com:rvodden/vimrc.git .
+git submodule init
+git submodule update
 touch .gitkeep
 cd ..
 ln -s my_plugins/my_configs.vim my_configs.vim
