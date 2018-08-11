@@ -43,3 +43,6 @@
 [submodule "vim-rake"]
 	path = vim-rake
 	url = https://github.com/tpope/vim-rake.git
+[submodule "ansible-vim"]
+	path = ansible-vim
+	url = git@github.com:pearofducks/ansible-vim.git
