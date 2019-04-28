@@ -43,13 +43,22 @@ augroup XML
     autocmd FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
 augroup END
 
+" add yaml stuffs
+let g:syntastic_yaml_checkers = ['yamllint']
+augroup YAML
+    autocmd! 
+    autocmd BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
+    autocmd FileType yaml setlocal expandtab
+augroup END
+
+" open quickfix window on make
+augroup QuickFixCmdPostOpenWindow
+    autocmd QuickFixCmdPost [^l]* nested bel cwindow
+    autocmd QuickFixCmdPost    l* nested bel lwindow
+augroup END
+
 " enable mouse support
 set mouse=a
-
-" map F10 to show syntax highlight group (helpful for debugging)
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-            \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-            \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 " ************************* OS SPECIFICS *********************************
 " detect the operating system
@@ -64,7 +73,7 @@ endif
 " ************************* PLUGIN CONFIGS *******************************
 " get NERDTree to startup automatically and on the left
 let g:NERDTreeWinPos = "left"
-augroup NERTree
+augroup NERDTree
     autocmd!
     autocmd vimenter * NERDTree
     autocmd vimenter * wincmd p
@@ -73,21 +82,12 @@ augroup NERTree
 augroup END
 
 if (g:os == "Darwin")
-    let g:ycm_server_python_interpreter="/usr/local/bin/python3"
-    let $PYTHONHOME="/usr/local/Cellar/python3/3.6.4_2/Frameworks/Python.framework/Versions/3.6"
-    set pythonthreedll=/usr/local/Cellar/python3/3.6.4_2/Frameworks/Python.framework/Versions/3.6/lib/libpython3.6.dylib
-    set pythondll=/usr/local/Cellar/python/2.7.14_2/Frameworks/Python.framework/Versions/2.7/lib/python2.7/config/libpython2.7.dylib
-
 " Use the pbcopy and pbpaste command line utilities to work around the lack of clipboard support
     nmap <leader>p :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
     imap <leader>p <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
     nmap <leader>y :.w !pbcopy<CR><CR>
     vnoremap <silent> <leader>y :<CR>:let @a=@" \| execute "normal! vgvy" \| let res=system("pbcopy", @") \| let @"=@a<CR>
 end
-
-" enable NERDTree mouse support
-let g:NERDTreeMouseMode=2
-let g:NERDTreeShowHidden=1
 
 " Enable Tagbar by default
 augroup tagbar
@@ -107,10 +107,7 @@ let g:lightline = {
             \              [ 'fugitive', 'readonly', 'filename', 'modified' ] ],
             \   'right': [ [ 'lineinfo' ],
             \              [ 'percent' ],
-            \              [ 'syntastic', 'fileformat', 'fileencoding', 'filetype' ] ]
-            \ },
-            \'component': {
-            \   'syntastic': '%#warningmsg#%{SyntasticStatuslineFlag()}%*'
+            \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
             \ },
             \'component_function': {
             \   'fugitive': 'fugitive#statusline',
@@ -128,11 +125,6 @@ function! MyFileformat()
     return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
 endfunction
 
-" configure syntastic
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_aggregate_errors = 1
 
 " configure vim_behat
 let g:feature_filetype='behat'
