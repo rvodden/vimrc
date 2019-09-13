@@ -46,3 +46,12 @@
 [submodule "c-support"]
 	path = c-support
 	url = git@github.com:WolfgangMehner/c-support.git
+[submodule "deoplete.nvim"]
+	path = deoplete.nvim
+	url = git@github.com:Shougo/deoplete.nvim.git
+[submodule "vim-hug-neovim-rpc"]
+	path = vim-hug-neovim-rpc
+	url = git@github.com:roxma/vim-hug-neovim-rpc.git
+[submodule "nvim-yarp"]
+	path = nvim-yarp
+	url = git@github.com:roxma/nvim-yarp.git
