@@ -43,14 +43,6 @@ augroup XML
     autocmd FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
 augroup END
 
-" add yaml stuffs
-let g:syntastic_yaml_checkers = ['yamllint']
-augroup YAML
-    autocmd! 
-    autocmd BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
-    autocmd FileType yaml setlocal expandtab
-augroup END
-
 " open quickfix window on make
 augroup QuickFixCmdPostOpenWindow
     autocmd QuickFixCmdPost [^l]* nested bel cwindow
@@ -59,6 +51,9 @@ augroup END
 
 " enable mouse support
 set mouse=a
+
+" make clipboard work
+set clipboard=unnamed
 
 " ************************* OS SPECIFICS *********************************
 " detect the operating system
@@ -71,29 +66,48 @@ if !exists("g:os")
 endif
 
 " ************************* PLUGIN CONFIGS *******************************
-" get NERDTree to startup automatically and on the left
-let g:NERDTreeWinPos = "left"
+" if no in vimdiff mode get NERDTree to startup automatically and on the left
+if !&diff
+    let g:NERDTreeWinPos = "left"
+    map <leader>r :NERDTreeFind<cr>
+endif
+
+" calls NERDTreeFind iff NERDTree is active, current window contains a modifiable file, and we're not in vimdiff
+function! s:syncTree()
+  let s:curwnum = winnr()
+  NERDTreeFind
+  exec s:curwnum . "wincmd w"
+endfunction
+
+function! s:syncTreeIf()
+  if (winnr("$") > 1)
+    call s:syncTree()
+  endif
+endfunction
+  
+" Shows NERDTree on start and synchronizes the tree with opened file when switching between opened windows
+autocmd BufEnter * call s:syncTreeIf()
 augroup NERDTree
     autocmd!
-    autocmd vimenter * NERDTree
-    autocmd vimenter * wincmd p
+    " Shows NERDTree on start and synchronizes the tree with opened file when switching between opened windows
+    autocmd BufEnter * call s:syncTreeIf()
+    " Focus on opened view after starting (instead of NERDTree)
+    autocmd VimEnter * call s:syncTree()
+    autocmd VimEnter * :wincmd w
+    " Auto refresh NERDTree files
+    autocmd CursorHold,CursorHoldI * if (winnr("$") > 1) | call NERDTreeFocus() | call g:NERDTree.ForCurrentTab().getRoot().refresh() | call g:NERDTree.ForCurrentTab().render() | wincmd w | endif
+
     " get vim to close if NERDTree is the only remaining window
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 augroup END
 
-if (g:os == "Darwin")
-" Use the pbcopy and pbpaste command line utilities to work around the lack of clipboard support
-    nmap <leader>p :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
-    imap <leader>p <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
-    nmap <leader>y :.w !pbcopy<CR><CR>
-    vnoremap <silent> <leader>y :<CR>:let @a=@" \| execute "normal! vgvy" \| let res=system("pbcopy", @") \| let @"=@a<CR>
-end
-
 " Enable Tagbar by default
-augroup tagbar
-    autocmd!
-    autocmd vimenter * TagbarToggle
-augroup END
+if !&diff
+    augroup tagbar
+        autocmd!
+        autocmd vimenter * TagbarToggle
+    augroup END
+endif
 
 " give lightline the correct colour scheme
 if !has('gui_running')
@@ -117,6 +131,9 @@ let g:lightline = {
             \ }
 set noshowmode
 
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+
 function! MyFiletype()
     return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
 endfunction
@@ -131,9 +148,11 @@ let g:feature_filetype='behat'
 
 " configure markdown
 let g:markdown_fenced_languages = ['php','c','sh']
+let g:mkdp_markdown_css = '/Users/richard.vodden/Documents/Source/github-markdown-css/github-markdown.css'
 augroup markdown
     autocmd!
     autocmd BufNewFile,BufRead *.md,*.markdown,*.md setlocal filetype=markdown
+    autocmd Filetype markdown normal zR
 augroup END
 
 " configure pencil

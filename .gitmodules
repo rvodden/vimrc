@@ -55,3 +55,12 @@
 [submodule "nvim-yarp"]
 	path = nvim-yarp
 	url = git@github.com:roxma/nvim-yarp.git
+[submodule "vim-terraform"]
+	path = vim-terraform
+	url = git@github.com:hashivim/vim-terraform.git
+[submodule "vim-surround"]
+	path = vim-surround
+	url = git@github.com:tpope/vim-surround.git
+[submodule "markdown-preview.nvim"]
+	path = markdown-preview.nvim
+	url = git@github.com:iamcco/markdown-preview.nvim.git
