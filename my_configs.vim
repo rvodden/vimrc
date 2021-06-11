@@ -4,17 +4,14 @@ filetype plugin on
 " configure solarized colour scheme
 set background=dark
 colorscheme solarized
-
 " enable line numbers
 set number
-
+set relativenumber
 " automatically reflect changes on disk
 set autoread
-
 " enable local configuration files
 set exrc
 set secure
-
 " default project options
 set tabstop=4
 set softtabstop=4
@@ -22,8 +19,11 @@ set shiftwidth=4
 set expandtab
 
 " highlight 110th column
-set colorcolumn=110
-highlight ColorColumn ctermbg=darkgrey
+"set colorcolumn=80
+"highlight ColorColumn ctermbg=darkgrey
+
+" set default text width
+set tw=79
 
 " ensure .c and .h files are pure c - not c++
 augroup project
@@ -55,6 +55,16 @@ set mouse=a
 " make clipboard work
 set clipboard=unnamed
 
+" enable autosave
+let g:auto_save = 1  " enable AutoSave on Vim startup"
+
+" ************************* KEY BINDINGS *********************************
+"
+
+nnoremap <BAR> :vsplit<CR>
+nnoremap _ :split<CR>
+
+
 " ************************* OS SPECIFICS *********************************
 " detect the operating system
 if !exists("g:os")
@@ -72,6 +82,9 @@ if !&diff
     map <leader>r :NERDTreeFind<cr>
 endif
 
+" configure localvimrc
+let g:localvimrc_sandbox = 0
+let g:localvimrc_ask = 0
 " calls NERDTreeFind iff NERDTree is active, current window contains a modifiable file, and we're not in vimdiff
 function! s:syncTree()
   let s:curwnum = winnr()
@@ -149,6 +162,8 @@ let g:feature_filetype='behat'
 " configure markdown
 let g:markdown_fenced_languages = ['php','c','sh']
 let g:mkdp_markdown_css = '/Users/richard.vodden/Documents/Source/github-markdown-css/github-markdown.css'
+let g:vim_markdown_toml_frontmatter = 1
+let g:vim_markdown_frontmatter = 1
 augroup markdown
     autocmd!
     autocmd BufNewFile,BufRead *.md,*.markdown,*.md setlocal filetype=markdown
@@ -156,13 +171,20 @@ augroup markdown
 augroup END
 
 " configure pencil
-let g:pencil#wrapModeDefault = 'hard'
 let g:pencil#autoformat = 1
 augroup pencil
     autocmd!
     autocmd FileType markdown,mkd call pencil#init()
     autocmd FileType text         call pencil#init()
 augroup END
+
+nmap <leader>sp :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
 
 augroup lexical
     autocmd!
@@ -171,6 +193,3 @@ augroup lexical
     autocmd FileType text call lexical#init({ 'spell': 0 })
 augroup END
 
-" configure localvimrc
-let g:localvimrc_sandbox = 0
-let g:localvimrc_ask = 0

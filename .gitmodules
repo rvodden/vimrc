@@ -67,3 +67,12 @@
 [submodule "vim-terraform-completion"]
 	path = vim-terraform-completion
 	url = git@github.com:juliosueiras/vim-terraform-completion.git
+[submodule "vim-markdown"]
+	path = vim-markdown
+	url = git@github.com:plasticboy/vim-markdown.git
+[submodule "vim-ruby"]
+	path = vim-ruby
+	url = git@github.com:vim-ruby/vim-ruby.git
+[submodule "vim-auto-save"]
+	path = vim-auto-save
+	url = https://github.com/907th/vim-auto-save
